@@ -18,7 +18,7 @@ Its design goals are:
 
 ### What's new:
 
-Please see the [CHANGELOG](https://github.com/kenn/sunzi/blob/master/CHANGELOG.md).
+Please see the [CHANGELOG](https://github.com/dakotalightning/sunzi/blob/master/CHANGELOG.md).
 
 Quickstart
 ----------
@@ -155,40 +155,10 @@ Cloud Support
 
 You can setup a new VM, or teardown an existing VM interactively. Use `sunzi setup` and `sunzi teardown` for that.
 
-The following screenshot says it all.
+[DigitalOcean](https://www.digitalocean.com) only.
 
-![Sunzi for Linode](http://farm8.staticflickr.com/7210/6783789868_ab89010d5c.jpg)
+v2.0 of the DigitalOcean API is supported &mdash; get your API key and client key [here](https://cloud.digitalocean.com/api_access).
 
-Right now, only [Linode](http://www.linode.com/) and [DigitalOcean](https://www.digitalocean.com) are supported.
-
-_Note: Only v1.0 of the DigitalOcean API is supported &mdash; get your API key and client key [here](https://cloud.digitalocean.com/api_access)._
-
-For DNS, Linode and [Amazon Route 53](http://aws.amazon.com/route53/) are supported.
-
-Vagrant
+Credits
 -------
-
-If you're using Sunzi with [Vagrant](http://vagrantup.com/), make sure that you have a root access via SSH.
-
-An easy way is to edit `Vagrantfile`:
-
-```ruby
-Vagrant.configure("2") do |config|
-  config.vm.provision "shell",
-    inline: "sudo echo 'root:vagrant' | /usr/sbin/chpasswd"
-  end
-end
-```
-
-and now run `vagrant up`, it will change the root password to `vagrant`.
-
-Also keep in mind that you need to specify the port number 2222.
-
-```bash
-$ sunzi deploy localhost:2222
-```
-
-Demonstration Videos
--------
-
-You can watch video on how to deploy a Rails 4.1 app with Sunzi and Capistrano 3 at http://youtu.be/3mwupXqtkmg
+  - [sunzi](https://github.com/kenn/sunzi)
