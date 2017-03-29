@@ -11,7 +11,7 @@ module Sunzi
       do_create(project)
     end
 
-    desc 'deploy [user@host:port] [role] [--sudo] or deploy [linode|digital_ocean] [name] [role]  [--sudo]', 'Deploy sunzi project'
+    desc 'deploy [user@host:port] [role] [--sudo] or deploy droplet [name] [role]  [--sudo]', 'Deploy sunzi project'
     method_options :sudo => false
     def deploy(first, *args)
       do_deploy(first, *args)
@@ -22,13 +22,13 @@ module Sunzi
       do_compile(role)
     end
 
-    desc 'setup [linode|digital_ocean]', 'Setup a new VM'
-    def setup(provider)
+    desc 'setup', 'Setup a new VM'
+    def setup(provider = "droplet_kit")
       Sunzi::Cloud.new(self, provider).setup
     end
 
-    desc 'teardown [linode|digital_ocean]', 'Teardown an existing VM'
-    def teardown(provider)
+    desc 'teardown', 'Teardown an existing VM'
+    def teardown(provider = "droplet_kit")
       Sunzi::Cloud.new(self, provider).teardown
     end
 
@@ -55,7 +55,7 @@ module Sunzi
       end
 
       def do_deploy(first, *args)
-        if ['linode', 'digital_ocean'].include?(first)
+        if ['droplet'].include?(first)
           @instance_attributes = YAML.load(File.read("#{first}/instances/#{args[0]}.yml"))
           target = @instance_attributes[:fqdn]
           role = args[1]
@@ -147,8 +147,8 @@ module Sunzi
         target.match(/(.*@)?(.*?)(:.*)?$/)
         # Load ssh config if it exists
         config = Net::SSH::Config.for($2)
-        [ ($1 && $1.delete('@') || config[:user] || 'root'), 
-          config[:host_name] || $2, 
+        [ ($1 && $1.delete('@') || config[:user] || 'root'),
+          config[:host_name] || $2,
           ($3 && $3.delete(':') || config[:port] && config[:port].to_s || '22') ]
       end
 

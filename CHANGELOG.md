@@ -1,3 +1,8 @@
+## 2.0, release 2017-03-28
+* updated to explicitly use digital ocean for `sunzi setup` and `sunzi teardown`
+* added `droplet_kit`
+* removed `digital_ocean`
+
 ## 1.5, release 2013-09-27
 * `sunzi deploy [linode|digital_ocean] [name]` will deploy to the instance with additional attributes.
 

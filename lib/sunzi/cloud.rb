@@ -4,10 +4,8 @@ module Sunzi
 
     def initialize(cli, provider)
       @subject = case provider
-      when 'linode'
-        Sunzi::Cloud::Linode.new(cli, provider)
-      when 'digital_ocean'
-        Sunzi::Cloud::DigitalOcean.new(cli, provider)
+      when 'droplet_kit'
+        Sunzi::Cloud::DropletKit.new(cli, provider)
       else
         abort_with "Provider #{provider} is not valid!"
       end

@@ -14,57 +14,54 @@ module Sunzi
       def setup
         unless File.exist? provider_config_path
           @cli.empty_directory "#{@provider}/instances"
-          @cli.template "templates/setup/#{provider_config_path}", provider_config_path
+          @cli.template "templates/setup/#{@provider}.yml", provider_config_path
           exit_with "Now go ahead and edit #{@provider}.yml, then run this command again!"
         end
 
-        assign_config_and_dns
+        # get the config { provider }.yml
+        assign_config
 
-        if @config['fqdn']['zone'] == 'example.com'
+        if @config['name'] == 'example-droplet-01'
           abort_with "You must have your own settings in #{@provider}.yml"
         end
 
-        # Ask environment and hostname
-        @env = ask("environment? (#{@config['environments'].join(' / ')}): ", String) {|q| q.in = @config['environments'] }.to_s
-        @host = ask('hostname? (only the first part of subdomain): ', String).to_s
+        if @config['access_token'] == 'your_api_key'
+          abort_with "You must add a valid access_token in #{@provider}.yml"
+        end
 
-        abort_with '"label" field in linode.yml is no longer supported. rename it to "name".' if @config['label']
-        @fqdn = @config['fqdn'][@env].gsub(/%{host}/, @host)
-        @name = @config['name'][@env].gsub(/%{host}/, @host)
+        # Ask environment and hostname
+        @env = ask_menu("environment?", @config['environments'])
+
+        @name = "#{@config['name']}-#{@env}"
         abort_with "#{@name} already exists!" if instance_config_path.exist?
 
-        assign_api
+        # get the client @client
+        setup_client
+
         @attributes = {}
         do_setup
 
         # Save instance info
         @cli.create_file instance_config_path, YAML.dump(@instance)
-
-        # Register IP to DNS
-        @dns.add(@fqdn, @public_ip) if @dns
       end
 
       def teardown
         names = Dir.glob("#{@provider}/instances/*.yml").map{|i| i.split('/').last.sub('.yml','') }
         abort_with "No match found with #{@provider}/instances/*.yml" if names.empty?
 
-        names.each{|i| say i }
-        @name = ask("which instance?: ", String) {|q| q.in = names }
+        @name = ask_menu("which instance?: ", names)
 
-        assign_config_and_dns
+        assign_config
 
         @instance = YAML.load(instance_config_path.read)
 
         # Are you sure?
-        moveon = ask("Are you sure about deleting #{@instance[:fqdn]} permanently? (y/n) ", String) {|q| q.in = ['y','n']}
+        moveon = ask("Are you sure about deleting #{@instance[:name]} permanently? (y/n) ", String) {|q| q.in = ['y','n']}
         exit unless moveon == 'y'
 
         # Run Linode / DigitalOcean specific tasks
-        assign_api
+        setup_client
         do_teardown
-
-        # Delete DNS record
-        @dns.delete(@instance[ip_key]) if @dns
 
         # Remove the instance config file
         @cli.remove_file instance_config_path
@@ -72,9 +69,8 @@ module Sunzi
         say 'Done.'
       end
 
-      def assign_config_and_dns
+      def assign_config
         @config = YAML.load(provider_config_path.read)
-        @dns = Sunzi::DNS.new(@config, @provider) if @config['dns']
       end
 
       def provider_config_path
@@ -89,8 +85,17 @@ module Sunzi
         @ui.ask(@ui.color(question, :green, :bold), answer_type, &details)
       end
 
+      def ask_menu(question, choices)
+        answer = @ui.choose do |menu|
+          menu.prompt = "#{@ui.color(question, :green, :bold)} "
+          choices.each { |n| menu.choice(n) }
+        end
+        say("=> #{answer}")
+        answer
+      end
+
       def proceed?
-        moveon = ask("Are you ready to go ahead and create #{@fqdn}? (y/n) ", String) {|q| q.in = ['y','n']}
+        moveon = ask("Are you ready to go ahead and create #{@name}? (y/n) ", String) {|q| q.in = ['y','n']}
         exit unless moveon == 'y'
       end
     end

@@ -64,8 +64,8 @@ $ sunzi compile                                   # Compile Sunzi project
 $ sunzi create                                    # Create a new Sunzi project
 $ sunzi deploy [user@host:port] [role] [--sudo]   # Deploy Sunzi project
 
-$ sunzi setup [linode|digital_ocean]              # Setup a new VM on the cloud services
-$ sunzi teardown [linode|digital_ocean]           # Teardown an existing VM on the cloud services
+$ sunzi setup                                     # Setup a new digital ocean VM droplet
+$ sunzi teardown                                  # Teardown an existing digital ocean VM droplet
 ```
 
 Directory structure
