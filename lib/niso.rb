@@ -7,14 +7,14 @@ require 'rainbow/version'
 require 'rainbow/ext/string' unless Rainbow::VERSION < '2.0.0'
 
 module Sunzi
-  autoload :Cli,        'sunzi/cli'
-  autoload :Cloud,      'sunzi/cloud'
-  autoload :Dependency, 'sunzi/dependency'
-  autoload :Logger,     'sunzi/logger'
-  autoload :Utility,    'sunzi/utility'
+  autoload :Cli,        'niso/cli'
+  autoload :Cloud,      'niso/cloud'
+  autoload :Dependency, 'niso/dependency'
+  autoload :Logger,     'niso/logger'
+  autoload :Utility,    'niso/utility'
 
   class Cloud
-    autoload :Base,         'sunzi/cloud/base'
-    autoload :DropletKit,   'sunzi/cloud/droplet_kit'
+    autoload :Base,         'niso/cloud/base'
+    autoload :DropletKit,   'niso/cloud/droplet_kit'
   end
 end
