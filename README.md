@@ -1,6 +1,6 @@
 # nîso ᓃᓱ
 
-[![Gem Version](https://badge.fury.io/rb/niso.svg)](https://badge.fury.io/rb/niso)
+[![Gem Version](https://badge.fury.io/rb/niso.svg)](https://badge.fury.io/rb/niso) [![Build Status](https://travis-ci.org/dakotalightning/niso.svg?branch=master)](https://travis-ci.org/dakotalightning/niso)
 
     niso is the number 2 (two) in Cree
 
