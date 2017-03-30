@@ -6,7 +6,7 @@ require 'yaml'
 require 'rainbow/version'
 require 'rainbow/ext/string' unless Rainbow::VERSION < '2.0.0'
 
-module Sunzi
+module Niso
   autoload :Cli,        'niso/cli'
   autoload :Cloud,      'niso/cloud'
   autoload :Dependency, 'niso/dependency'

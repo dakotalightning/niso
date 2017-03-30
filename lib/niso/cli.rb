@@ -6,18 +6,18 @@ module Niso
   class Cli < Thor
     include Thor::Actions
 
-    desc 'create', 'Create sunzi project'
-    def create(project = 'sunzi')
+    desc 'create', 'Create niso project'
+    def create(project = 'niso')
       do_create(project)
     end
 
-    desc 'deploy [user@host:port] [role] [--sudo] or deploy droplet [name] [role]  [--sudo]', 'Deploy sunzi project'
+    desc 'deploy [user@host:port] [role] [--sudo] or deploy droplet [name] [role]  [--sudo]', 'Deploy niso project'
     method_options :sudo => false
     def deploy(first, *args)
       do_deploy(first, *args)
     end
 
-    desc 'compile', 'Compile sunzi project'
+    desc 'compile', 'Compile niso project'
     def compile(role = nil)
       do_compile(role)
     end
@@ -34,11 +34,11 @@ module Niso
 
     desc 'version', 'Show version'
     def version
-      puts Gem.loaded_specs['sunzi'].version.to_s
+      puts Gem.loaded_specs['niso'].version.to_s
     end
 
     no_tasks do
-      include Sunzi::Utility
+      include Niso::Utility
 
       def self.source_root
         File.expand_path('../../',__FILE__)
@@ -46,9 +46,9 @@ module Niso
 
       def do_create(project)
         copy_file 'templates/create/.gitignore',         "#{project}/.gitignore"
-        copy_file 'templates/create/sunzi.yml',          "#{project}/sunzi.yml"
+        copy_file 'templates/create/niso.yml',          "#{project}/niso.yml"
         copy_file 'templates/create/install.sh',         "#{project}/install.sh"
-        copy_file 'templates/create/recipes/sunzi.sh',   "#{project}/recipes/sunzi.sh"
+        copy_file 'templates/create/recipes/niso.sh',   "#{project}/recipes/niso.sh"
         copy_file 'templates/create/roles/db.sh',        "#{project}/roles/db.sh"
         copy_file 'templates/create/roles/web.sh',       "#{project}/roles/web.sh"
         copy_file 'templates/create/files/.gitkeep',     "#{project}/files/.gitkeep"
@@ -76,14 +76,14 @@ module Niso
         `ssh-keygen -R #{host} 2> /dev/null`
 
         remote_commands = <<-EOS
-        rm -rf ~/sunzi &&
-        mkdir ~/sunzi &&
-        cd ~/sunzi &&
+        rm -rf ~/niso &&
+        mkdir ~/niso &&
+        cd ~/niso &&
         tar xz &&
         #{sudo}bash install.sh
         EOS
 
-        remote_commands.strip! << ' && rm -rf ~/sunzi' if @config['preferences'] and @config['preferences']['erase_remote_folder']
+        remote_commands.strip! << ' && rm -rf ~/niso' if @config['preferences'] and @config['preferences']['erase_remote_folder']
 
         local_commands = <<-EOS
         cd compiled
@@ -105,13 +105,13 @@ module Niso
       end
 
       def do_compile(role)
-        # Check if you're in the sunzi directory
-        abort_with 'You must be in the sunzi folder' unless File.exists?('sunzi.yml')
+        # Check if you're in the niso directory
+        abort_with 'You must be in the niso folder' unless File.exists?('niso.yml')
         # Check if role exists
         abort_with "#{role} doesn't exist!" if role and !File.exists?("roles/#{role}.sh")
 
-        # Load sunzi.yml
-        @config = YAML.load(File.read('sunzi.yml'))
+        # Load niso.yml
+        @config = YAML.load(File.read('niso.yml'))
 
         # Merge instance attributes
         @config['attributes'] ||= {}
