@@ -1,9 +1,9 @@
-require 'sunzi'
+require 'niso'
 require 'minitest/autorun'
 
 class TestCli < Minitest::Test
   def setup
-    @cli = Sunzi::Cli.new
+    @cli = Niso::Cli.new
   end
 
   def test_parse_target
@@ -34,13 +34,13 @@ class TestCli < Minitest::Test
 
   def test_create
     @cli.create 'sandbox'
-    assert File.exist?('sandbox/sunzi.yml')
+    assert File.exist?('sandbox/niso.yml')
     FileUtils.rm_rf 'sandbox'
   end
 
   def test_copy_local_files
     pwd = Dir.pwd
-    Dir.chdir('test/sunzi_test_dir')
+    Dir.chdir('test/niso_test_dir')
 
     @cli.copy_local_files({}, :copy_file)
     assert File.exists?('compiled/files/nginx/nginx.conf')

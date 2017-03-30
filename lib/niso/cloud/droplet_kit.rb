@@ -1,6 +1,6 @@
-Sunzi::Dependency.load('droplet_kit')
+Niso::Dependency.load('droplet_kit')
 
-module Sunzi
+module Niso
   class Cloud
     class DropletKit < Base
       def do_setup

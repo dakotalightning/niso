@@ -1,9 +1,9 @@
-Sunzi::Dependency.load('highline')
+Niso::Dependency.load('highline')
 
-module Sunzi
+module Niso
   class Cloud
     class Base
-      include Sunzi::Utility
+      include Niso::Utility
 
       def initialize(cli, provider)
         @provider = provider

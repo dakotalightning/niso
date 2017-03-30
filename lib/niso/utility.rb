@@ -1,4 +1,4 @@
-module Sunzi
+module Niso
   module Utility
     def abort_with(text)
       Logger.error text

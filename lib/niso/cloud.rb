@@ -1,11 +1,11 @@
-module Sunzi
+module Niso
   class Cloud
-    include Sunzi::Utility
+    include Niso::Utility
 
     def initialize(cli, provider)
       @subject = case provider
       when 'droplet_kit'
-        Sunzi::Cloud::DropletKit.new(cli, provider)
+        Niso::Cloud::DropletKit.new(cli, provider)
       else
         abort_with "Provider #{provider} is not valid!"
       end

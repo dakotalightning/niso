@@ -2,7 +2,7 @@ require 'open3'
 require 'ostruct'
 require 'net/ssh'
 
-module Sunzi
+module Niso
   class Cli < Thor
     include Thor::Actions
 
@@ -24,12 +24,12 @@ module Sunzi
 
     desc 'setup', 'Setup a new VM'
     def setup(provider = "droplet_kit")
-      Sunzi::Cloud.new(self, provider).setup
+      Niso::Cloud.new(self, provider).setup
     end
 
     desc 'teardown', 'Teardown an existing VM'
     def teardown(provider = "droplet_kit")
-      Sunzi::Cloud.new(self, provider).teardown
+      Niso::Cloud.new(self, provider).teardown
     end
 
     desc 'version', 'Show version'

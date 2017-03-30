@@ -1,4 +1,4 @@
-module Sunzi
+module Niso
   class Dependency
     def self.all
       {
