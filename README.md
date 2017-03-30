@@ -68,23 +68,30 @@ For instance, when you set up a new web server, deploy with a role name:
 
 It is equivalent to running `install.sh`, followed by `web.sh`.
 
-### Requirements
+## Requirements
 
 For `niso deploy`
 
     $ [sudo] gem install droplet_kit
     $ [sudo] gem install highline
 
-### DigitalOcean
+## DigitalOcean
 You can setup a new VM, or teardown an existing VM interactively. Use `niso setup` and `niso teardown` for that.
 
 [DigitalOcean](https://www.digitalocean.com) only.
 
 v2.0 of the DigitalOcean API is supported &mdash; get your [access token](https://cloud.digitalocean.com/api_access).
 
-### What's new:
+## Changelong:
 
 Please see the [CHANGELOG](https://github.com/dakotalightning/niso/blob/master/CHANGELOG.md).
+
+## Contributing
+
+1. Fork the project
+2. Make your changes, including tests that exercise the code
+3. Summarize your changes in [CHANGELOG](https://github.com/dakotalightning/niso/blob/master/CHANGELOG.md)
+4. Make a pull request
 
 ## Credits
 
