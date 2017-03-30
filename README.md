@@ -86,4 +86,4 @@ Please see the [CHANGELOG](https://github.com/dakotalightning/niso/blob/master/C
 
 ## Credits
 
-- This project is a hard fork of the proejct [niso](https://github.com/kenn/niso) by [kenn](https://github.com/kenn).
+- This project is a hard fork of the proejct [sunzi](https://github.com/kenn/sunzi) by [kenn](https://github.com/kenn).
