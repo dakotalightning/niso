@@ -11,7 +11,7 @@ module Niso
       do_create(project)
     end
 
-    desc 'deploy [user@host:port] [role] [--sudo] or deploy droplet [name] [role]  [--sudo]', 'Deploy niso project'
+    desc 'deploy [user@host:port] [role] [--sudo] or deploy do [name] [role]  [--sudo]', 'Deploy niso project'
     method_options :sudo => false
     def deploy(first, *args)
       do_deploy(first, *args)
@@ -55,7 +55,7 @@ module Niso
       end
 
       def do_deploy(first, *args)
-        if ['droplet'].include?(first)
+        if ['do'].include?(first)
           @instance_attributes = YAML.load(File.read("#{first}/instances/#{args[0]}.yml"))
           target = @instance_attributes[:fqdn]
           role = args[1]
