@@ -7,7 +7,7 @@ module Niso
 
         if @config["size"]
           # Choose size
-          @attributes[:size_slug] = @config["size"]
+          @attributes[:size] = @config["size"]
           say "using config size"
         else
           choose(:size, @client.sizes.all())
@@ -15,7 +15,7 @@ module Niso
 
         if @config["region"]
           # Choose region
-          @attributes[:region_slug] = @config["region"]
+          @attributes[:region] = @config["region"]
           say "using config region"
         else
           choose(:region, @client.regions.all())
@@ -23,7 +23,7 @@ module Niso
 
         # Choose an image
         if @config["image"]
-          @attributes[:image_slug] = @config["image"]
+          @attributes[:image] = @config["image"]
           say "using config image"
         else
           if @config['images_filter']
@@ -48,9 +48,9 @@ module Niso
         say "creating a new droplet..."
         droplet = ::DropletKit::Droplet.new(
           name: @name,
-          region: @attributes[:region_slug],
-          image: @attributes[:image_slug],
-          size: @attributes[:size_slug],
+          region: @attributes[:region],
+          image: @attributes[:image],
+          size: @attributes[:size],
           ssh_keys: ssh_keys
         )
         result = @client.droplets.create(droplet)
@@ -71,9 +71,9 @@ module Niso
           env: @env,
           name: @name,
           networks: JSON.parse(@networks),
-          size_slug: @attributes[:size_slug],
-          region_slug: @attributes[:region_slug],
-          image_slug: @attributes[:image_slug],
+          size: @attributes[:size],
+          region: @attributes[:region],
+          image: @attributes[:image],
         }
       end
 
@@ -81,7 +81,7 @@ module Niso
         abort "no #{key} found!" if result.first.nil?
         # result.each{|i| say "#{i.slug}" }
         choices = result.map(&:slug).compact
-        @attributes[:"#{key}_slug"] = ask_menu("which #{key}?: ", choices)
+        @attributes[:"#{key}"] = ask_menu("which #{key}?: ", choices)
       end
 
       def do_teardown
