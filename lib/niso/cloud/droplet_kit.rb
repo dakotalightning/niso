@@ -58,7 +58,6 @@ module Niso
         @instance = {
           :droplet_id => @droplet_id,
           :env  => @env,
-          :host => @host,
           :name => @name,
           :networks => @networks,
           :size_slug      => @attributes[:size_slug],
