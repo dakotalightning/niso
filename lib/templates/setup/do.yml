@@ -2,7 +2,7 @@
 access_token: your_api_key
 
 name: example-droplet-01
-# region: sf01
+# region: sfo1
 # image: ubuntu-14-04-x64
 # size: 512mb
 
