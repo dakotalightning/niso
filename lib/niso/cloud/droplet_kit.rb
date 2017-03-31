@@ -57,7 +57,12 @@ module Niso
           private_networking: @config["private_networking"],
           ssh_keys: ssh_keys
         )
-        result = @client.droplets.create(droplet)
+
+        begin
+          result = @client.droplets.create(droplet)
+        rescue ::DropletKit::FailedCreate => e
+          abort_with e.message
+        end
 
         @droplet_id = result.id
         say "Created a new droplet (id: #{@droplet_id}). Booting..."
