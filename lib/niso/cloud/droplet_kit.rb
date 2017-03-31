@@ -7,7 +7,7 @@ module Niso
 
         if @config["size"]
           # Choose size
-          @attributes[:size] = @config["size"]
+          @attributes[:size_slug] = @config["size"]
           say "using config size"
         else
           choose(:size, @client.sizes.all())
@@ -15,7 +15,7 @@ module Niso
 
         if @config["region"]
           # Choose region
-          @attributes[:region] = @config["region"]
+          @attributes[:region_slug] = @config["region"]
           say "using config region"
         else
           choose(:region, @client.regions.all())
