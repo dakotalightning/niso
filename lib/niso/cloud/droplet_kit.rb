@@ -34,7 +34,12 @@ module Niso
         end
 
         # Go ahead?
-        moveon = ask("Are you ready to go ahead and create #{@attributes}? (y/n) ", ['y','n'])
+        say " - name => #{@ui.color(@name, :blue, :bold)}"
+        @attributes.each do |k,v|
+          say " - #{k} => #{@ui.color(v, :blue, :bold)}"
+        end
+        say " - account => #{@ui.color(@client_info.email, :blue, :bold)}"
+        moveon = ask("Are you ready to go ahead? (y/n) ", ['y','n'])
         exit unless moveon == 'y'
 
         ssh_keys = @client.ssh_keys.all.collect { |key| key.fingerprint }
@@ -87,9 +92,7 @@ module Niso
       def setup_client
         begin
           @client = ::DropletKit::Client.new(access_token: @config['access_token'])
-          info = @client.account.info()
-          moveon = ask(" ... continue with #{info.email} account? (y/n) ", String) {|q| q.in = ['y','n']}
-          exit unless moveon == 'y'
+          @client_info = @client.account.info()
         rescue ::DropletKit::Error => e
           abort_with e.message
         end
