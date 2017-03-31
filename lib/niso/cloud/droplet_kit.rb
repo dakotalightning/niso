@@ -22,11 +22,16 @@ module Niso
         end
 
         # Choose an image
-        if @config['images_filter']
-          result = @client.images.all(type: @config['images_filter'])
-          result = result.select{|i| i.distribution.match Regexp.new(@config['images_filter'], Regexp::IGNORECASE) }
+        if @config["image"]
+          @attributes[:image_slug] = @config["image"]
+          say "using config image"
+        else
+          if @config['images_filter']
+            result = @client.images.all(type: @config['images_filter'])
+            result = result.select{|i| i.distribution.match Regexp.new(@config['images_filter'], Regexp::IGNORECASE) }
+          end
+          choose(:image, result)
         end
-        choose(:image, result)
 
         # Go ahead?
         moveon = ask("Are you ready to go ahead and create #{@attributes}? (y/n) ", ['y','n'])
