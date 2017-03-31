@@ -53,7 +53,7 @@ module Niso
         end
 
         @networks = @client.droplets.find(id: @droplet_id).networks
-        say "Done. networks = #{@networks.ip_address}"
+        say "Done. networks = #{@networks.v4.ip_address}"
 
         @instance = {
           droplet_id: @droplet_id,
