@@ -56,13 +56,16 @@ module Niso
         say "Done. networks = #{@networks.ip_address}"
 
         @instance = {
-          :droplet_id => @droplet_id,
-          :env  => @env,
-          :name => @name,
-          :networks => @networks,
-          :size_slug      => @attributes[:size_slug],
-          :region_slug    => @attributes[:region_slug],
-          :image_slug     => @attributes[:image_slug],
+          droplet_id: @droplet_id,
+          env: @env,
+          name: @name,
+          networks: {
+            v4: @networks.v4,
+            v6: @networks.v6,
+          },
+          size_slug: @attributes[:size_slug],
+          region_slug: @attributes[:region_slug],
+          image_slug: @attributes[:image_slug],
         }
       end
 
