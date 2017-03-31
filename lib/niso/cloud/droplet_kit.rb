@@ -57,8 +57,8 @@ module Niso
           sleep 3
         end
 
-        @networks = @client.droplets.find(id: @droplet_id).networks
-        say "Done. networks = #{@networks.v4.ip_address}"
+        @networks = @client.droplets.find(id: @droplet_id).networks.to_h
+        say "Done."
 
         @instance = {
           droplet_id: @droplet_id,
