@@ -38,6 +38,9 @@ module Niso
         @attributes.each do |k,v|
           say " - #{k} => #{@ui.color(v, :blue, :bold)}"
         end
+        if @config["private_networking"]
+          say " - private_networking => #{@ui.color(@config["private_networking"].to_s, :blue, :bold)}"
+        end
         say " - account => #{@ui.color(@client_info.email, :blue, :bold)}"
         moveon = ask("Are you ready to go ahead? (y/n) ", ['y','n'])
         exit unless moveon == 'y'
@@ -51,6 +54,7 @@ module Niso
           region: @attributes[:region],
           image: @attributes[:image],
           size: @attributes[:size],
+          private_networking: @config["private_networking"],
           ssh_keys: ssh_keys
         )
         result = @client.droplets.create(droplet)

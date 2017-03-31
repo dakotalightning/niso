@@ -5,6 +5,7 @@ name: example-droplet-01
 # region: sfo1
 # image: ubuntu-14-04-x64
 # size: 512mb
+# private_networking: true
 
 # filter out large lists by keyword
 images_filter: ubuntu
