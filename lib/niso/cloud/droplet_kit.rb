@@ -46,7 +46,13 @@ module Niso
 
         # Create
         say "creating a new droplet..."
-        droplet = ::DropletKit::Droplet.new(name: @name, region: @attributes[:region_slug], image: @attributes[:image_slug], size: @attributes[:size_slug], ssh_keys: ssh_keys)
+        droplet = ::DropletKit::Droplet.new(
+          name: @name,
+          region: @attributes[:region_slug],
+          image: @attributes[:image_slug],
+          size: @attributes[:size_slug],
+          ssh_keys: ssh_keys
+        )
         result = @client.droplets.create(droplet)
 
         @droplet_id = result.id
