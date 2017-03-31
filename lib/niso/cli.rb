@@ -115,7 +115,7 @@ module Niso
 
         # Merge instance attributes
         @config['attributes'] ||= {}
-        @config['attributes'].update(Hash[@instance_attributes.map{|k,v| [k.to_s, v] }]) if @instance_attributes
+        # @config['attributes'].update(Hash[@instance_attributes.map{|k,v| [k.to_s, v] }]) if @instance_attributes
 
         # Break down attributes into individual files
         (@config['attributes'] || {}).each {|key, value| create_file "compiled/attributes/#{key}", value }
