@@ -23,12 +23,12 @@ module Niso
     end
 
     desc 'setup', 'Setup a new VM'
-    def setup(provider = "droplet_kit")
+    def setup(provider = "do")
       Niso::Cloud.new(self, provider).setup
     end
 
     desc 'teardown', 'Teardown an existing VM'
-    def teardown(provider = "droplet_kit")
+    def teardown(provider = "do")
       Niso::Cloud.new(self, provider).teardown
     end
 

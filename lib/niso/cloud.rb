@@ -4,7 +4,7 @@ module Niso
 
     def initialize(cli, provider)
       @subject = case provider
-      when 'droplet_kit'
+      when 'do'
         Niso::Cloud::DropletKit.new(cli, provider)
       else
         abort_with "Provider #{provider} is not valid!"
