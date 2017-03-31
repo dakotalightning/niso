@@ -9,6 +9,7 @@ Gem::Specification.new do |spec|
   spec.summary       = %q{Server provisioning utility}
   spec.description   = %q{Fork of the sunzi project, Plugin based Server provisioning utility}
   spec.license       = 'MIT'
+  spec.required_ruby_version = '>= 2.1.6'
 
   spec.files         = `git ls-files`.split($/)
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
