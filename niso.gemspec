@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name          = 'niso'
-  spec.version       = '2.0.3'
+  spec.version       = '2.0.4'
   spec.authors       = ['Dakota Lightning']
   spec.email         = ['im@koda.io']
   spec.homepage      = 'http://github.com/dakotalightning/niso'
