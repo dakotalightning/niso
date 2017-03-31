@@ -57,7 +57,7 @@ module Niso
       def do_deploy(first, *args)
         if ['do'].include?(first)
           @instance_attributes = YAML.load(File.read("#{first}/instances/#{args[0]}.yml"))
-          target = @instance_attributes[:fqdn]
+          target = @instance_attributes[:networks]["v4"].first["ip_address"]
           role = args[1]
         else
           target = first
