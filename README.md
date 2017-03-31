@@ -6,6 +6,8 @@
 
 ## Quickstart
 
+Example: https://github.com/dakotalightning/niso-example
+
 Install:
 
     $ [sudo] gem install niso
