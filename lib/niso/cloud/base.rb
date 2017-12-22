@@ -22,7 +22,7 @@ module Niso
         assign_config
 
         if @config['name'] == 'example-droplet-01'
-          abort_with "You must have your own settings in #{@provider}.yml"
+          abort_with "You must update the name in your settings file #{@provider}.yml"
         end
 
         if @config['access_token'] == 'your_api_key'
