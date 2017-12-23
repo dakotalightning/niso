@@ -38,6 +38,7 @@ module Niso
     end
 
     no_tasks do
+      Niso::Dependency.load('highline')
       include Niso::Utility
 
       def self.source_root
@@ -55,6 +56,8 @@ module Niso
       end
 
       def do_deploy(first, *args)
+        @ui = HighLine.new
+
         if ['do'].include?(first)
           @instance_attributes = YAML.load(File.read("#{first}/instances/#{args[0]}.yml"))
           target = @instance_attributes[:networks]["v4"].first["ip_address"]
@@ -68,39 +71,53 @@ module Niso
         user, host, port = parse_target(target)
         endpoint = "#{user}@#{host}"
 
-        # compile attributes and recipes
-        do_compile(role)
+        say "#{@ui.color("doing deploy", :green, :bold)}"
+        say " #{@ui.color("user", :green, :bold)}  #{user}"
+        say " #{@ui.color("host", :green, :bold)}  #{host}"
+        say " #{@ui.color("port", :green, :bold)}  #{port}"
+        say " #{@ui.color("role", :green, :bold)}  #{role}"
 
-        # The host key might change when we instantiate a new VM, so
-        # we remove (-R) the old host key from known_hosts.
-        `ssh-keygen -R #{host} 2> /dev/null`
+        begin
+          # compile attributes and recipes
+          do_compile(role)
+        rescue Exception => e
+          abort_with "#{e.message}"
+        end
 
-        remote_commands = <<-EOS
-        rm -rf ~/niso &&
-        mkdir ~/niso &&
-        cd ~/niso &&
-        tar xz &&
-        #{sudo}bash install.sh
-        EOS
+        begin
+          # The host key might change when we instantiate a new VM, so
+          # we remove (-R) the old host key from known_hosts.
+          `ssh-keygen -R #{host} 2> /dev/null`
 
-        remote_commands.strip! << ' && rm -rf ~/niso' if @config['preferences'] and @config['preferences']['erase_remote_folder']
+          remote_commands = <<-EOS
+          rm -rf ~/niso &&
+          mkdir ~/niso &&
+          cd ~/niso &&
+          tar xz &&
+          #{sudo}bash install.sh
+          EOS
 
-        local_commands = <<-EOS
-        cd compiled
-        tar cz . | ssh -o 'StrictHostKeyChecking no' #{endpoint} -p #{port} '#{remote_commands}'
-        EOS
+          remote_commands.strip! << ' && rm -rf ~/niso' if @config['preferences'] and @config['preferences']['erase_remote_folder']
 
-        Open3.popen3(local_commands) do |stdin, stdout, stderr|
-          stdin.close
-          t = Thread.new do
-            while (line = stderr.gets)
-              print line.color(:red)
+          local_commands = <<-EOS
+          cd compiled
+          tar cz . | ssh -o 'StrictHostKeyChecking no' #{endpoint} -p #{port} '#{remote_commands}'
+          EOS
+
+          Open3.popen3(local_commands) do |stdin, stdout, stderr|
+            stdin.close
+            t = Thread.new do
+              while (line = stderr.gets)
+                print line.color(:red)
+              end
             end
+            while (line = stdout.gets)
+              print line.color(:green)
+            end
+            t.join
           end
-          while (line = stdout.gets)
-            print line.color(:green)
-          end
-          t.join
+        rescue Exception => e
+          abort_with e.message
         end
       end
 
@@ -121,10 +138,15 @@ module Niso
         (@config['attributes'] || {}).each {|key, value| create_file "compiled/attributes/#{key}", value }
 
         # Retrieve remote recipes via HTTP
-        cache_remote_recipes = @config['preferences'] && @config['preferences']['cache_remote_recipes']
-        (@config['recipes'] || []).each do |key, value|
-          next if cache_remote_recipes and File.exists?("compiled/recipes/#{key}.sh")
-          get value, "compiled/recipes/#{key}.sh"
+        begin
+          # compile attributes and recipes
+          cache_remote_recipes = @config['preferences'] && @config['preferences']['cache_remote_recipes']
+          (@config['recipes'] || []).each do |key, value|
+            next if cache_remote_recipes and File.exists?("compiled/recipes/#{key}.sh")
+            get value, "compiled/recipes/#{key}.sh"
+          end
+        rescue Exception => e
+          abort_with "check your remote recipes in (niso.yml)\n#{e.message}"
         end
 
         copy_or_template = (@config['preferences'] && @config['preferences']['eval_erb']) ? :template : :copy_file
