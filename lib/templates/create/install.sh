@@ -2,7 +2,7 @@
 set -e
 
 # Load base utility functions like niso.mute() and niso.install()
-source recipes/.sh
+source recipes/niso.sh
 
 # This line is necessary for automated provisioning for Debian/Ubuntu.
 # Remove if you're not on Debian/Ubuntu.
