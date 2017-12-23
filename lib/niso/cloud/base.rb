@@ -15,7 +15,7 @@ module Niso
         unless File.exist? provider_config_path
           @cli.empty_directory "#{@provider}/instances"
           @cli.template "templates/setup/#{@provider}.yml", provider_config_path
-          exit_with "Now go ahead and edit #{@provider}.yml, then run this command again!"
+          exit_with "Now go ahead and update the access_token:, name: of #{@provider}.yml, then run this command again!"
         end
 
         # get the config { provider }.yml
@@ -26,7 +26,7 @@ module Niso
         end
 
         if @config['access_token'] == 'your_api_key'
-          abort_with "You must add a valid access_token in #{@provider}.yml"
+          abort_with "Access Token is invalid, please check your #{@provider}.yml"
         end
 
         # Ask environment and hostname
