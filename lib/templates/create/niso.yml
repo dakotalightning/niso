@@ -6,10 +6,24 @@ attributes:
 
 # Remote recipes here will be downloaded to compiled/recipes.
 recipes:
-  rvm: https://raw.githubusercontent.com/kenn/niso-recipes/master/ruby/rvm.sh
-  # dotdeb: https://raw.githubusercontent.com/kenn/niso-recipes/master/debian/dotdeb-wheezy.sh
-  # backports: https://raw.githubusercontent.com/kenn/niso-recipes/master/debian/backports-wheezy.sh
-  # mongodb-10gen: https://raw.githubusercontent.com/kenn/niso-recipes/master/debian/mongodb-10gen.sh
+  # rvm: https://raw.githubusercontent.com/kenn/sunzi-recipes/master/ruby/rvm.sh
+  # dotdeb: https://raw.githubusercontent.com/kenn/sunzi-recipes/master/debian/dotdeb-wheezy.sh
+  # backports: https://raw.githubusercontent.com/kenn/sunzi-recipes/master/debian/backports-wheezy.sh
+  # mongodb-10gen: https://raw.githubusercontent.com/kenn/sunzi-recipes/master/debian/mongodb-10gen.sh
+  # niso recipies
+  # adduser: https://raw.githubusercontent.com/dakotalightning/niso-example/master/recipes/adduser.sh
+  # build-essential: https://raw.githubusercontent.com/dakotalightning/niso-example/master/recipes/build-essential.sh
+  # git: https://raw.githubusercontent.com/dakotalightning/niso-example/master/recipes/git.sh
+  # mysql-client: https://raw.githubusercontent.com/dakotalightning/niso-example/master/recipes/mysql-client.sh
+  # mysql: https://raw.githubusercontent.com/dakotalightning/niso-example/master/recipes/mysql.sh
+  # nginx: https://raw.githubusercontent.com/dakotalightning/niso-example/master/recipes/nginx.sh
+  # nodejs: https://raw.githubusercontent.com/dakotalightning/niso-example/master/recipes/nodejs.sh
+  # rbenv: https://raw.githubusercontent.com/dakotalightning/niso-example/master/recipes/rbenv.sh
+  # redis: https://raw.githubusercontent.com/dakotalightning/niso-example/master/recipes/redis.sh
+  # set_env_vars: https://raw.githubusercontent.com/dakotalightning/niso-example/master/recipes/set_env_vars.sh
+  # sidekiq: https://raw.githubusercontent.com/dakotalightning/niso-example/master/recipes/sidekiq.sh
+  # sudonopassword: https://raw.githubusercontent.com/dakotalightning/niso-example/master/recipes/sudonopassword.sh
+  # ufw: https://raw.githubusercontent.com/dakotalightning/niso-example/master/recipes/ufw.sh
 
 # Files specified here will be copied to compiled/files.
 # files:
